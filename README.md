@@ -1,3 +1,5 @@
+English Description:
+
 Income-Expense Tracking Application
 Application Description:
 
@@ -15,6 +17,7 @@ Key Features:
 
 5-) User-Friendly Interface: The application boasts a clean and intuitive interface. All operations can be performed through simple steps, maximizing the user experience.
 
+Türkçe Açıklama
 
 Gelir-Gider Takip Uygulaması
 Uygulama Açıklaması:
