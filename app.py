@@ -11,19 +11,19 @@ gelirler = []
 giderler = []
 tekrarlayan_giderler = []
 
-# Döviz çevirme oranları yaklaşık düz hesap
+
 exchange_rates = {
     "TL": 1,
-    "USD": 35.0,  # Örnek kur: 1 USD = 35 TL
-    "EUR": 37.0   # Örnek kur: 1 EUR = 37 TL
+    "USD": 35.0,  
+    "EUR": 37.0   
 }
 
 def para_birimine_cevir(miktar, birim, hedef_birim="TL"):
     """Para birimini hedef para birimine (TL) çevirir."""
     if birim == hedef_birim:
         return miktar
-    tl_miktar = miktar * exchange_rates[birim]  # İlk önce TL'ye çevir
-    return tl_miktar / exchange_rates[hedef_birim]  # TL'den hedef para birimine çevir
+    tl_miktar = miktar * exchange_rates[birim]  
+    return tl_miktar / exchange_rates[hedef_birim]  
 
 def gelir_ekle():
     try:
@@ -51,7 +51,7 @@ def gider_ekle():
         gider = {"Tür": gider_turu, "Miktar": gider_miktari, "Para Birimi": para_birimi, "Tarih": tarih, "Saat": saat}
         giderler.append(gider)
         
-        # Tekrarlayan giderleri ayrı bir listeye kaydediyoruz
+        
         if tekrarla:
             tekrarlayan_giderler.append(gider)
 
@@ -74,7 +74,7 @@ def excel_kaydet():
             messagebox.showerror("Hata", "Kaydedilecek veri yok.")
             return
 
-        # Tüm gelir ve giderleri TL'ye çevirerek yeni DataFrame'ler oluşturuyoruz
+        
         gelirler_df = pd.DataFrame(
             [{"Tür": gelir["Tür"], "Miktar (TL)": para_birimine_cevir(gelir["Miktar"], gelir["Para Birimi"]), "Tarih": gelir["Tarih"], "Saat": gelir["Saat"]}
              for gelir in gelirler]
@@ -84,19 +84,19 @@ def excel_kaydet():
              for gider in giderler]
         )
 
-        # Yeni bir Excel dosyası oluştur
+        
         wb = Workbook()
         
-        # Gelirler sayfasını ekle ve biçimlendir
+        
         if not gelirler_df.empty:
             ws_gelirler = wb.active
             ws_gelirler.title = "Gelirler"
             
-            # Gelirler verilerini yaz
+            
             for r in dataframe_to_rows(gelirler_df, index=False, header=True):
                 ws_gelirler.append(r)
             
-            # Hücrelerin genişliğini, yüksekliğini ve fontunu ayarla
+            
             for row in ws_gelirler.iter_rows():
                 for cell in row:
                     cell.font = Font(bold=True)
@@ -105,25 +105,25 @@ def excel_kaydet():
                                          top=Side(style="thick"), bottom=Side(style="thick"))
             for col in ws_gelirler.columns:
                 col_letter = col[0].column_letter
-                ws_gelirler.column_dimensions[col_letter].width = 20  # Yaklaşık 160px
+                ws_gelirler.column_dimensions[col_letter].width = 20  
             
             for row in range(1, ws_gelirler.max_row + 1):
-                ws_gelirler.row_dimensions[row].height = 20  # Yaklaşık 80px
+                ws_gelirler.row_dimensions[row].height = 20  
 
-            # Tarih formatını ayarlayın
+            
             for row in ws_gelirler.iter_rows(min_row=2, min_col=3, max_col=3):
                 for cell in row:
-                    cell.number_format = 'DD/MM/YYYY'  # Gün/Ay/Yıl formatı
+                    cell.number_format = 'DD/MM/YYYY'  
 
-        # Giderler sayfasını ekle ve biçimlendir
+        
         if not giderler_df.empty:
             ws_giderler = wb.create_sheet(title="Giderler")
             
-            # Giderler verilerini yaz
+            
             for r in dataframe_to_rows(giderler_df, index=False, header=True):
                 ws_giderler.append(r)
             
-            # Hücrelerin genişliğini, yüksekliğini ve fontunu ayarla
+            
             for row in ws_giderler.iter_rows():
                 for cell in row:
                     cell.font = Font(bold=True)
@@ -132,17 +132,17 @@ def excel_kaydet():
                                          top=Side(style="thick"), bottom=Side(style="thick"))
             for col in ws_giderler.columns:
                 col_letter = col[0].column_letter
-                ws_giderler.column_dimensions[col_letter].width = 20  # Yaklaşık 160px
+                ws_giderler.column_dimensions[col_letter].width = 20  
             
             for row in range(1, ws_giderler.max_row + 1):
-                ws_giderler.row_dimensions[row].height = 20  # Yaklaşık 80px
+                ws_giderler.row_dimensions[row].height = 20  
 
-            # Tarih formatını ayarlayın
+            
             for row in ws_giderler.iter_rows(min_row=2, min_col=3, max_col=3):
                 for cell in row:
-                    cell.number_format = 'DD/MM/YYYY'  # Gün/Ay/Yıl formatı
+                    cell.number_format = 'DD/MM/YYYY'  
 
-        # Dosya yolunu masaüstüne kaydetmek için güncelleyebilirsiniz
+        
         wb.save(r"C:\Users\user\OneDrive\Masaüstü\GelirGiderHesaplamasi.xlsx")
         messagebox.showinfo("Başarılı", "Veriler Excel dosyasına başarıyla kaydedildi.")
     except Exception as e:
@@ -162,7 +162,7 @@ root = tk.Tk()
 root.title("Gelir-Gider Takip Programı")
 root.geometry("1200x800")  
 
-# Gelir Bölümü
+
 gelir_frame = tk.LabelFrame(root, text="Gelir Ekle", font=("Arial", 12, "bold"))
 gelir_frame.pack(padx=10, pady=10, fill="both", expand=True)
 
@@ -177,7 +177,7 @@ gelir_miktari_entry = tk.Entry(gelir_frame, font=("Arial", 10), width=40)
 gelir_miktari_entry.grid(row=1, column=1, padx=5, pady=5)
 
 gelir_para_birimi = ttk.Combobox(gelir_frame, values=["TL", "USD", "EUR"], font=("Arial", 10), state="readonly")
-gelir_para_birimi.current(0)  # Varsayılan olarak TL seçili
+gelir_para_birimi.current(0)  
 gelir_para_birimi.grid(row=2, column=1, padx=5, pady=5)
 
 gelir_para_birimi_label = tk.Label(gelir_frame, text="Para Birimi:", font=("Arial", 10))
@@ -220,7 +220,7 @@ gider_miktari_entry = tk.Entry(gider_frame, font=("Arial", 10), width=40)
 gider_miktari_entry.grid(row=1, column=1, padx=5, pady=5)
 
 gider_para_birimi = ttk.Combobox(gider_frame, values=["TL", "USD", "EUR"], font=("Arial", 10), state="readonly")
-gider_para_birimi.current(0)  # Varsayılan olarak TL seçili
+gider_para_birimi.current(0)  
 gider_para_birimi.grid(row=2, column=1, padx=5, pady=5)
 
 gider_para_birimi_label = tk.Label(gider_frame, text="Para Birimi:", font=("Arial", 10))
@@ -252,7 +252,7 @@ tekrarlayan_gider_checkbox.grid(row=6, column=0, columnspan=2, padx=5, pady=5)
 gider_ekle_button = tk.Button(gider_frame, text="Gider Ekle", command=gider_ekle, font=("Arial", 10), bg="lightcoral")
 gider_ekle_button.grid(row=7, columnspan=2, padx=5, pady=5, ipadx=10)
 
-# Hesaplama ve kaydetme butonları
+
 hesapla_button = tk.Button(root, text="Hesapla", command=hesapla, font=("Arial", 12), bg="lightblue")
 hesapla_button.pack(pady=10)
 
