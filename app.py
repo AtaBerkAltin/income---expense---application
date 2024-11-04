@@ -205,7 +205,7 @@ gelir_dakika_label.grid(row=5, column=0, padx=5, pady=5)
 gelir_ekle_button = tk.Button(gelir_frame, text="Gelir Ekle", command=gelir_ekle, font=("Arial", 10), bg="lightgreen")
 gelir_ekle_button.grid(row=6, columnspan=2, padx=5, pady=5, ipadx=10)
 
-# Gider Bölümü
+
 gider_frame = tk.LabelFrame(root, text="Gider Ekle", font=("Arial", 12, "bold"))
 gider_frame.pack(padx=10, pady=10, fill="both", expand=True)
 
